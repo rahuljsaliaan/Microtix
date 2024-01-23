@@ -1,18 +1,18 @@
 apiVersion: skaffold/v1
 kind: Config
-deploy: 
+deploy:
   kubectl:
     manifests:
       - ./infra/k8s/*
-build: 
-  local: 
+build:
+  local:
     push: false
   artifacts:
     - image: rahuljsaliaan/auth
       context: auth
-      docker: 
+      docker:
         dockerfile: Dockerfile
-      sync: 
+      sync:
         manual:
           - src: 'src/**/*.ts'
             dest: .
