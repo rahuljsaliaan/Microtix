@@ -20,18 +20,29 @@ interface UserDoc extends mongoose.Document {
   //   updatedAt: string;
 }
 
-const userSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
+const userSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
   },
-  password: {
-    type: String,
-    required: true,
-    select: false,
-  },
-});
+  {
+    versionKey: false,
+    toJSON: {
+      transform(doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.password;
+      },
+    },
+  }
+);
 
 userSchema.statics.build = (attrs: UserAttrs) => {
   return new User(attrs);
