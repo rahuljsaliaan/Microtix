@@ -1,0 +1,25 @@
+{
+  "name": "@rjmicrotix/common",
+  "version": "1.0.0",
+  "description": "Common utilities for Microtix projects",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "files": [
+    "build/**/*"
+  ],
+  "scripts": {
+    "clean": "del ./build/*",
+    "build": "npm run clean && tsc"
+  },
+  "keywords": [
+    "utilities",
+    "rjmicrotix",
+    "common"
+  ],
+  "author": "Rahul J",
+  "license": "MIT",
+  "devDependencies": {
+    "del-cli": "^5.1.0",
+    "typescript": "^5.3.3"
+  }
+}
