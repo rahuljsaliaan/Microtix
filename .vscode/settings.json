@@ -3,6 +3,7 @@
         "currentuser",
         "microtix",
         "signin",
-        "signout"
+        "signout",
+        "signup"
     ]
 }
