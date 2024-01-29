@@ -1,6 +1,6 @@
 {
   "name": "@rjmicrotix/common",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Common utilities for Microtix projects",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -8,8 +8,9 @@
     "build/**/*"
   ],
   "scripts": {
-    "clean": "del ./build/*",
-    "build": "npm run clean && tsc"
+    "clean": "del /Q /S .\\build\\*",
+    "build": "npm run clean && tsc",
+    "pub": "git add . && git commit -a -m \"Updates\" && npm version patch && npm run build && npm publish"
   },
   "keywords": [
     "utilities",
