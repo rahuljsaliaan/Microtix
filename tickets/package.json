@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec ts-node -- ./src/index.ts",
+    "start": "ts-node-dev --poll src/index.ts",
     "test": "jest --watchAll --no-cache"
   },
   "jest": {
@@ -24,7 +24,8 @@
     "express-async-errors": "^3.1.1",
     "express-validator": "^7.0.1",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.1.0"
+    "mongoose": "^8.1.0",
+    "node-nats-streaming": "^0.3.2"
   },
   "devDependencies": {
     "@types/cookie-session": "^2.0.48",
