@@ -4,8 +4,10 @@ import { NotFoundError } from '@rjmicrotix/common';
 
 const router = express.Router();
 
-router.get('/api/tickets/:id', async (req: Request, res: Response) => {
-  const ticket = await Ticket.findById(req.params.id);
+router.get('/api/tickets/:ticketId', async (req: Request, res: Response) => {
+  const { ticketId } = req.params;
+
+  const ticket = await Ticket.findById(ticketId);
 
   if (!ticket) {
     throw new NotFoundError();
