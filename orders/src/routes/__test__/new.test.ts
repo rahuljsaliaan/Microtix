@@ -3,6 +3,7 @@ import request from 'supertest';
 import { app } from '../../app';
 import { Order, OrderStatus } from '../../models/Order';
 import { Ticket } from '../../models/Ticket';
+import { natsWrapper } from '../../nats-wrapper';
 
 it('can only be accessed if user is signed in', async () => {
   const response = await request(app).post('/api/orders').send({});
@@ -68,4 +69,19 @@ it('reserves a ticket', async () => {
     .expect(201);
 });
 
-it.todo('emits and order created event');
+it('emits and order created event', async () => {
+  const ticket = Ticket.build({
+    title: 'test',
+    price: 200,
+  });
+
+  await ticket.save();
+
+  await request(app)
+    .post('/api/orders')
+    .set('Cookie', global.signin())
+    .send({ ticketId: ticket.id })
+    .expect(201);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
+});

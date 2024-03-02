@@ -6,6 +6,8 @@ import {
 } from '@rjmicrotix/common';
 import express, { Request, Response } from 'express';
 import { Order } from '../models/Order';
+import { OrderCancelledEvent } from '../events/publishers/order-cancelled-publisher';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -29,6 +31,16 @@ router.delete(
     order.status = OrderStatus.Cancelled;
 
     await order.save();
+
+    const { id, ticket } = order;
+
+    // Publish an event saying that the order was cancelled
+    new OrderCancelledEvent(natsWrapper.client).publish({
+      id,
+      ticket: {
+        id: ticket.id,
+      },
+    });
 
     res.status(204).send();
   }
