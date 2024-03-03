@@ -18,6 +18,7 @@ interface OrderDoc extends mongoose.Document {
   status: OrderStatus;
   expiresAt: Date;
   ticket: TicketDoc;
+  version: number;
 }
 
 // Orders Modal
@@ -46,6 +47,8 @@ const orderSchema = new mongoose.Schema(
     },
   },
   {
+    optimisticConcurrency: true,
+    versionKey: 'version',
     toJSON: {
       transform(doc, ret) {
         ret.id = ret._id;
