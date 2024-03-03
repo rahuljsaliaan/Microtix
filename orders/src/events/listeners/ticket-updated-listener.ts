@@ -18,7 +18,8 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
   ): Promise<void> {
     const { id, title, price, version } = data;
 
-    const ticket = await Ticket.findById(id);
+    // NOTE: Find the ticket with the given id and the previous version number to ensure we're updating the correct version of the ticket (Solves concurrency issue).
+    const ticket = await Ticket.findByEvent({ id, version });
 
     if (!ticket) {
       throw new NotFoundError();

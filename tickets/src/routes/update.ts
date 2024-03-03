@@ -37,23 +37,20 @@ router.put(
 
     const { title, price } = req.body;
 
-    if (title !== undefined) {
-      ticket.title = title;
+    const updates = { title, price };
+    Object.assign(ticket, updates);
+
+    if (ticket.isModified()) {
+      await ticket.save();
+
+      await new TicketUpdatedPublisher(natsWrapper.client).publish({
+        id: ticket.id,
+        title: ticket.title,
+        price: ticket.price,
+        userId: ticket.userId,
+        version: ticket.version,
+      });
     }
-
-    if (price !== undefined) {
-      ticket.price = price;
-    }
-
-    await ticket.save();
-
-    await new TicketUpdatedPublisher(natsWrapper.client).publish({
-      id: ticket.id,
-      title: ticket.title,
-      price: ticket.price,
-      userId: ticket.userId,
-      version: ticket.version,
-    });
 
     res.send(ticket);
   }
