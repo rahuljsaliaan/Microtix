@@ -3,6 +3,7 @@ import { app } from '../../app';
 import { Order, OrderStatus } from '../../models/Order';
 import { Ticket } from '../../models/Ticket';
 import { natsWrapper } from '../../nats-wrapper';
+import mongoose from 'mongoose';
 
 it('can only be accessed if user is signed in', async () => {
   const response = await request(app).post('/api/orders').send({});
@@ -22,6 +23,7 @@ it('returns a status other than 401 if the user is signed in', async () => {
 it('marks an order as cancelled', async () => {
   // Create a ticket with Ticket model
   const ticket = Ticket.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: 'test',
     price: 200,
   });
@@ -53,6 +55,7 @@ it('marks an order as cancelled', async () => {
 it('emits a order cancelled event', async () => {
   // Create a ticket with Ticket model
   const ticket = Ticket.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: 'test',
     price: 200,
   });

@@ -1,6 +1,7 @@
 import request from 'supertest';
 import { app } from '../../app';
 import { Ticket } from '../../models/Ticket';
+import mongoose from 'mongoose';
 
 it('can only be accessed if user is signed in', async () => {
   const response = await request(app).post('/api/orders').send({});
@@ -23,6 +24,7 @@ const buildTicket = (() => {
 
   return async () => {
     const ticket = Ticket.build({
+      id: new mongoose.Types.ObjectId().toHexString(),
       title: title + count++,
       price: 200,
     });

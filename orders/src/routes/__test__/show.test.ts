@@ -32,6 +32,7 @@ it('returns a 404 if the order is not found', async () => {
 it('returns a 401 if the order does not belong to the user', async () => {
   // Create a ticket
   const ticket = Ticket.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: 'test',
     price: 200,
   });
@@ -59,6 +60,7 @@ it('returns a 401 if the order does not belong to the user', async () => {
 it('returns the order if order is found', async () => {
   // Create a ticket
   const ticket = Ticket.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: 'test',
     price: 200,
   });
