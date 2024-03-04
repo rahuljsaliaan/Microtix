@@ -1,6 +1,6 @@
 {
   "name": "@rjmicrotix/common",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "description": "Common utilities for Microtix projects",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",

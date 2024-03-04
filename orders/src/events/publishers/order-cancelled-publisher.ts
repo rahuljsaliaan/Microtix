@@ -1,7 +1,7 @@
-import { OrderCancelled, Publisher, Subjects } from '@rjmicrotix/common';
+import { OrderCancelledEvent, Publisher, Subjects } from '@rjmicrotix/common';
 import { Stan } from 'node-nats-streaming';
 
-export class OrderCancelledEvent extends Publisher<OrderCancelled> {
+export class OrderCancelledPublisher extends Publisher<OrderCancelledEvent> {
   readonly subject: Subjects.OrderCancelled = Subjects.OrderCancelled;
 
   constructor(client: Stan) {
