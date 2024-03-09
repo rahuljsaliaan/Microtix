@@ -23,8 +23,4 @@ export class TicketCreatedListener extends Listener<TicketCreatedEvent> {
 
     msg.ack();
   }
-
-  constructor(client: Stan) {
-    super(client);
-  }
 }

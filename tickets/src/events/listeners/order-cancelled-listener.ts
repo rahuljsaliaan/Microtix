@@ -22,7 +22,6 @@ export class OrderCancelledListener extends Listener<OrderCancelledEvent> {
     ticket.set({ orderId: undefined });
 
     if (ticket.isModified()) {
-      console.log('published data 🧪🧪🧪');
       await ticket.save();
 
       const { id, version, title, price, userId, orderId } = ticket;

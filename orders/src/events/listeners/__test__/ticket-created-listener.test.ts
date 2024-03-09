@@ -33,7 +33,7 @@ it('creates and saves a ticket', async () => {
   // Call the onMessage function with the data object + message object
   await listener.onMessage(data, msg);
 
-  // Write assertions to make sure a ticket was created\
+  // Write assertions to make sure a ticket was created
   const { id, title, price } = data;
 
   const ticket = await Ticket.findById(id);

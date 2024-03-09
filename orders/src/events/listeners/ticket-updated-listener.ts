@@ -31,8 +31,4 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
 
     msg.ack();
   }
-
-  constructor(client: Stan) {
-    super(client);
-  }
 }
