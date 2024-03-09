@@ -4,7 +4,10 @@ import mongoose from 'mongoose';
 interface OrderAttrs {
   id: string;
   userId: string;
-  price: number;
+  ticket: {
+    price: number;
+    title: string;
+  };
   status: OrderStatus;
   version: number;
 }
@@ -12,7 +15,10 @@ interface OrderAttrs {
 interface OrderDoc extends mongoose.Document {
   id: string;
   userId: string;
-  price: number;
+  ticket: {
+    price: number;
+    title: string;
+  };
   status: OrderStatus;
   version: number;
 }
@@ -30,8 +36,17 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
 
-    price: {
-      type: Number,
+    ticket: {
+      type: {
+        price: {
+          type: Number,
+          required: true,
+        },
+        title: {
+          type: String,
+          required: true,
+        },
+      },
       required: true,
     },
 

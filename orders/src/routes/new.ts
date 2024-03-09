@@ -68,6 +68,7 @@ router.post(
       expiresAt: expiresAt.toISOString(),
       ticket: {
         id: ticket.id,
+        title: ticket.title,
         price: ticket.price,
       },
       version,

@@ -34,7 +34,10 @@ it('returns a 401 when purchasing order that does not belong to the user', async
   const order = Order.build({
     id: new mongoose.Types.ObjectId().toHexString(),
     userId: new mongoose.Types.ObjectId().toHexString(),
-    price: 200,
+    ticket: {
+      title: 'test',
+      price: 200,
+    },
     status: OrderStatus.Created,
     version: 0,
   });
@@ -57,7 +60,10 @@ it('returns a 400 when purchasing a cancelled order', async () => {
   const order = Order.build({
     id: new mongoose.Types.ObjectId().toHexString(),
     userId,
-    price: 200,
+    ticket: {
+      title: 'test',
+      price: 200,
+    },
     status: OrderStatus.Cancelled,
     version: 0,
   });

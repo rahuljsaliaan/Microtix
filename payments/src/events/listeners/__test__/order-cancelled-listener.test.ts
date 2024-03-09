@@ -11,7 +11,10 @@ const setup = async () => {
   const order = Order.build({
     id: new mongoose.Types.ObjectId().toHexString(),
     userId: new mongoose.Types.ObjectId().toHexString(),
-    price: 200,
+    ticket: {
+      title: 'test',
+      price: 200,
+    },
     status: OrderStatus.Created,
     version: 0,
   });
