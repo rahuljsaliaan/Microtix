@@ -4,28 +4,17 @@ import mongoose from 'mongoose';
 import { Order } from '../../models/Order';
 import { OrderStatus } from '@rjmicrotix/common';
 
-it('can only be accessed if user is signed in', async () => {
-  const response = await request(app).post('/api/payments').send({});
-
-  expect(response.status).toEqual(401);
-});
-
-it('returns a status other than 401 if the user is signed in', async () => {
-  const response = await request(app)
-    .post('/api/payments')
-    .set('Cookie', global.signin())
-    .send({});
-
-  expect(response.status).not.toEqual(401);
-});
-
 it('returns a 404 when purchasing order that does not exist', async () => {
   return request(app)
-    .post('/api/payments')
+    .post('/webhook-checkout')
     .set('Cookie', global.signin())
+    .set('stripe-signature', '{}')
     .send({
-      token: 'test',
-      orderId: new mongoose.Types.ObjectId().toHexString(),
+      data: {
+        object: {
+          client_reference_id: new mongoose.Types.ObjectId().toHexString(),
+        },
+      },
     })
     .expect(404);
 });
@@ -45,11 +34,15 @@ it('returns a 401 when purchasing order that does not belong to the user', async
   await order.save();
 
   await request(app)
-    .post('/api/payments')
+    .post('/webhook-checkout')
     .set('Cookie', global.signin())
+    .set('stripe-signature', '{}')
     .send({
-      token: 'test',
-      orderId: order.id,
+      data: {
+        object: {
+          client_reference_id: order.id,
+        },
+      },
     })
     .expect(401);
 });
@@ -71,11 +64,15 @@ it('returns a 400 when purchasing a cancelled order', async () => {
   await order.save();
 
   await request(app)
-    .post('/api/payments')
+    .post('/webhook-checkout')
     .set('Cookie', global.signin(userId))
+    .set('stripe-signature', '{}')
     .send({
-      token: 'test',
-      orderId: order.id,
+      data: {
+        object: {
+          client_reference_id: order.id,
+        },
+      },
     })
     .expect(400);
 });
