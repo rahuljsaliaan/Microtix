@@ -3,6 +3,7 @@ import { app } from '../../app';
 import mongoose from 'mongoose';
 import { Order } from '../../models/Order';
 import { OrderStatus } from '@rjmicrotix/common';
+import { Payment } from '../../models/Payment';
 
 jest.mock('../../stripe-config');
 
@@ -60,7 +61,7 @@ it('returns a 400 when purchasing a cancelled order', async () => {
       price: 200,
     },
     status: OrderStatus.Cancelled,
-    version: 0,
+    version: 1,
   });
 
   await order.save();
@@ -77,4 +78,44 @@ it('returns a 400 when purchasing a cancelled order', async () => {
       },
     })
     .expect(400);
+});
+
+it('returns a 201 with valid inputs', async () => {
+  const userId = new mongoose.Types.ObjectId().toHexString();
+
+  const order = Order.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
+    userId,
+    ticket: {
+      title: 'test',
+      price: 200,
+    },
+    status: OrderStatus.Created,
+    version: 0,
+  });
+
+  await order.save();
+
+  const stripeId = global.generateFakeStripeId();
+
+  await request(app)
+    .post('/api/payments')
+    .set('Cookie', global.signin(userId))
+    .set('stripe-signature', '{}')
+    .send({
+      data: {
+        object: {
+          client_reference_id: order.id,
+          id: stripeId,
+        },
+      },
+    })
+    .expect(201);
+
+  const payment = await Payment.findOne({
+    orderId: order.id,
+    stripeId,
+  });
+
+  expect(payment).not.toBeNull();
 });

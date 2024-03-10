@@ -50,7 +50,6 @@ it('finds updates and saves a ticket', async () => {
 
   const updatedTicket = await Ticket.findById(ticket.id);
 
-  expect(updatedTicket).toBeDefined();
   expect(updatedTicket!.title).toEqual(title);
   expect(updatedTicket!.price).toEqual(price);
 });

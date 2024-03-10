@@ -38,7 +38,6 @@ it('creates and saves a ticket', async () => {
 
   const ticket = await Ticket.findById(id);
 
-  expect(ticket).toBeDefined();
   expect(ticket!.title).toEqual(title);
   expect(ticket!.price).toEqual(price);
 });

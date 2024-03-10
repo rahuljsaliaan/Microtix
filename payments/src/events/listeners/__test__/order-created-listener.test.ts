@@ -38,7 +38,6 @@ it('replicates the order info', async () => {
 
   const order = await Order.findById(id);
 
-  expect(order).toBeDefined();
   expect(order!.ticket.price).toEqual(ticket.price);
 });
 

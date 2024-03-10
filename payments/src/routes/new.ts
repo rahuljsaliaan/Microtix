@@ -10,6 +10,9 @@ import { header } from 'express-validator';
 import { Order } from '../models/Order';
 
 import { webhookCheckout } from '../middlewares/webhook-checkout';
+import { Payment } from '../models/Payment';
+import { PaymentCompletePublisher } from '../events/publishers/payment-complete-publisher';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -20,7 +23,7 @@ router.post(
   express.raw({ type: 'application/json' }),
   webhookCheckout,
   async (req: Request, res: Response) => {
-    const orderId = req.session.client_reference_id;
+    const { client_reference_id: orderId, id: stripeId } = req.session;
 
     if (!orderId) {
       throw new BadRequestError('Invalid request');
@@ -39,9 +42,21 @@ router.post(
     if (order.status === OrderStatus.Cancelled) {
       throw new BadRequestError('Cannot pay for an cancelled order');
     }
-    console.log('🧪🧪🧪');
 
-    res.send({ success: true });
+    const payment = Payment.build({
+      orderId,
+      stripeId,
+    });
+
+    await payment.save();
+
+    new PaymentCompletePublisher(natsWrapper.client).publish({
+      id: payment.id,
+      orderId: payment.orderId,
+      stripeId: payment.stripeId,
+    });
+
+    res.status(201).send(payment);
   }
 );
 

@@ -7,6 +7,7 @@ dotenv.config();
 
 declare global {
   var signin: (id?: string) => string[];
+  var generateFakeStripeId: () => string;
 }
 
 jest.mock('../nats-wrapper');
@@ -54,4 +55,13 @@ global.signin = (id: string = new mongoose.Types.ObjectId().toHexString()) => {
 
   // return a string thats a cookie with the encoded data
   return [`session=${base64}`];
+};
+
+global.generateFakeStripeId = (): string => {
+  // Generate a random alphanumeric string of length 24
+  const randomId = [...Array(24)]
+    .map(() => Math.random().toString(36)[2])
+    .join('');
+
+  return `cs_${randomId}`;
 };
