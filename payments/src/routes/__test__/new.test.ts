@@ -4,9 +4,11 @@ import mongoose from 'mongoose';
 import { Order } from '../../models/Order';
 import { OrderStatus } from '@rjmicrotix/common';
 
+jest.mock('../../stripe-config');
+
 it('returns a 404 when purchasing order that does not exist', async () => {
   return request(app)
-    .post('/webhook-checkout')
+    .post('/api/payments')
     .set('Cookie', global.signin())
     .set('stripe-signature', '{}')
     .send({
@@ -34,7 +36,7 @@ it('returns a 401 when purchasing order that does not belong to the user', async
   await order.save();
 
   await request(app)
-    .post('/webhook-checkout')
+    .post('/api/payments')
     .set('Cookie', global.signin())
     .set('stripe-signature', '{}')
     .send({
@@ -64,7 +66,7 @@ it('returns a 400 when purchasing a cancelled order', async () => {
   await order.save();
 
   await request(app)
-    .post('/webhook-checkout')
+    .post('/api/payments')
     .set('Cookie', global.signin(userId))
     .set('stripe-signature', '{}')
     .send({

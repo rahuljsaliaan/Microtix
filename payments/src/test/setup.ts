@@ -1,13 +1,15 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 declare global {
   var signin: (id?: string) => string[];
 }
 
 jest.mock('../nats-wrapper');
-jest.mock('../stripe');
 
 let mongoServer: any;
 

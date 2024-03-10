@@ -12,11 +12,6 @@ interface StripeData {
 
 // Define the Stripe object
 export const stripe = {
-  checkout: {
-    sessions: {
-      create: jest.fn(), // Mock function for testing
-    },
-  },
   webhooks: {
     // This function constructs a Stripe event
     constructEvent: (

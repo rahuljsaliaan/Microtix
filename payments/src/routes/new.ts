@@ -14,13 +14,17 @@ import { webhookCheckout } from '../middlewares/webhook-checkout';
 const router = express.Router();
 
 router.post(
-  '/webhook-checkout',
+  '/api/payments',
   [header('stripe-signature').notEmpty()],
   validateRequest,
   express.raw({ type: 'application/json' }),
   webhookCheckout,
   async (req: Request, res: Response) => {
-    const orderId = req.session!.client_reference_id as string;
+    const orderId = req.session.client_reference_id;
+
+    if (!orderId) {
+      throw new BadRequestError('Invalid request');
+    }
 
     const order = await Order.findById(orderId);
 
@@ -35,6 +39,7 @@ router.post(
     if (order.status === OrderStatus.Cancelled) {
       throw new BadRequestError('Cannot pay for an cancelled order');
     }
+    console.log('🧪🧪🧪');
 
     res.send({ success: true });
   }

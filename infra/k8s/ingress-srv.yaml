@@ -38,13 +38,6 @@ spec:
                 name: payments-srv
                 port:
                   number: 3000
-          - path: /webhook-checkout
-            pathType: Prefix
-            backend:
-              service:
-                name: payments-srv
-                port:
-                  number: 3000
           - path: /?(.*)
             pathType: ImplementationSpecific
             backend:

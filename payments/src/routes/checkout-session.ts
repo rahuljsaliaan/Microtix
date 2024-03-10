@@ -1,7 +1,7 @@
 import { NotFoundError, requireAuth } from '@rjmicrotix/common';
 import express, { Request, Response } from 'express';
 import { Order } from '../models/Order';
-import { stripe } from '../stripe';
+import { stripe } from '../stripe-config';
 
 const router = express.Router();
 
@@ -33,10 +33,11 @@ router.get(
         {
           price_data: {
             currency: 'inr',
-            unit_amount: order.ticket.price * 100,
             product_data: {
               name: order.ticket.title,
+              description: `Order for ticket: ${order.ticket.title}`,
             },
+            unit_amount: order.ticket.price * 100,
           },
           quantity: 1,
         },

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { stripe } from '../stripe';
+import { stripe } from '../stripe-config';
 import Stripe from 'stripe';
 import { BadRequestError } from '@rjmicrotix/common';
 
@@ -35,5 +35,6 @@ export const webhookCheckout = (
   }
 
   req.session = event.data.object; // Add the event to the req object
+
   next();
 };
