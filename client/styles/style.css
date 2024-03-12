@@ -3,4 +3,6 @@ body {
     min-width: 100dvw;
     background: linear-gradient(to bottom right, #01202b, #013b3b);
     background-size: cover;
+    overflow-x: hidden;
+    box-sizing: border-box !important;
 }
