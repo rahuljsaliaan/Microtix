@@ -6,3 +6,49 @@ body {
     overflow-x: hidden;
     box-sizing: border-box !important;
 }
+
+
+.hover-effect {
+    transition: all 0.3s;
+    /* Smooth transition */
+}
+
+.hover-effect:hover {
+    transform: translateY(-1rem);
+    cursor: pointer;
+    box-shadow: 0 0 10px #013b3b,
+        /* Inner glow */
+        0 0 20px #013b3b,
+        /* Middle glow */
+        0 0 30px #01202b,
+        /* Outer glow */
+        0 0 40px #01202b;
+    /* Far outer glow */
+}
+
+.price-box {
+    display: inline-block;
+    padding: 10px;
+    border: 2px solid #fff;
+    /* White border */
+    color: #fff;
+    /* White text */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent black background */
+}
+
+.ticket-img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.ticket-img-2 {
+    width: 15rem;
+}
+
+.center-div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
