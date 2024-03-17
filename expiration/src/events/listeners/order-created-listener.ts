@@ -14,7 +14,7 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
     const { id } = data;
 
     const delay = new Date(data.expiresAt).getTime() - new Date().getTime();
-    const date = new Date();
+    const date = new Date(delay);
     console.log(
       `Waiting ${date.getMinutes()}:${date.getSeconds()} minutes to process the job`
     );

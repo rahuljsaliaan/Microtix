@@ -26,7 +26,7 @@ export class OrderCancelledListener extends Listener<OrderCancelledEvent> {
 
       const { id, version, title, price, userId, orderId } = ticket;
 
-       new TicketUpdatedPublisher(this.client).publish({
+      new TicketUpdatedPublisher(this.client).publish({
         id,
         version,
         title,

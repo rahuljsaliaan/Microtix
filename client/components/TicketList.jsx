@@ -4,7 +4,7 @@ import Link from 'next/link';
 function TicketCardBody({ ticket, type = 'tickets' }) {
   const orderStatusStyles = {
     cancelled: 'btn-danger',
-    created: 'btn-info',
+    created: 'btn-warning',
     complete: 'btn-success',
   };
 
@@ -12,12 +12,20 @@ function TicketCardBody({ ticket, type = 'tickets' }) {
     <div className="card-body overflow-hidden">
       <img className="ticket-img" src="images/ticket.png" alt="ticket" />
       <h5 className="card-title">{ticket.title}</h5>
-      <p className="card-text price-box mt-2">₹{ticket.price}</p>
-      {type === 'orders' && (
-        <p className={`card-test mt-2 btn ${orderStatusStyles[ticket.status]}`}>
-          {ticket.status}
-        </p>
-      )}
+      <div className="d-flex justify-content-between">
+        <p className="card-text price-box mt-2">₹{ticket.price}</p>
+        {type === 'orders' && (
+          <p
+            className={`card-test mt-2 text-light fw-bold btn ${
+              orderStatusStyles[ticket.status]
+            }`}
+          >
+            {ticket.status === 'created'
+              ? 'Pending'
+              : ticket.status.toUpperCase()}
+          </p>
+        )}
+      </div>
     </div>
   );
 }

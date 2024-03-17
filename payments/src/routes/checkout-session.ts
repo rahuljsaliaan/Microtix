@@ -38,7 +38,7 @@ router.get(
         },
       ],
       mode: 'payment',
-      success_url: `${req.protocol}://${req.get('host')}/`,
+      success_url: `${req.protocol}://${req.get('host')}/orders`,
       cancel_url: `${req.protocol}://${req.get('host')}/`,
       customer_email: req.currentUser!.email,
       client_reference_id: orderId,
