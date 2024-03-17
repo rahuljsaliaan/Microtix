@@ -22,12 +22,7 @@ router.get(
       payment_method_types: ['card'],
       billing_address_collection: 'required',
       shipping_address_collection: {
-        allowed_countries: [
-          'IN',
-          'US',
-          'CA',
-          'GB' /* other countries where you have customers */,
-        ],
+        allowed_countries: ['IN', 'US', 'CA', 'GB'],
       },
       line_items: [
         {
@@ -43,12 +38,8 @@ router.get(
         },
       ],
       mode: 'payment',
-      // NOTE: Not a secure way to do this. Use a webhook instead
-      // success_url: `${req.protocol}://${req.get('host')}/?tour=${
-      //   req.params.tourId
-      // }&user=${req.user.id}&price=${tour.price}`,
-      success_url: `${req.protocol}://${req.get('host')}/tickets`,
-      cancel_url: `${req.protocol}://${req.get('host')}/tickets`,
+      success_url: `${req.protocol}://${req.get('host')}/`,
+      cancel_url: `${req.protocol}://${req.get('host')}/`,
       customer_email: req.currentUser!.email,
       client_reference_id: orderId,
     });

@@ -7,7 +7,7 @@ function OrderShow({ orderId }) {
     createPaymentSession(orderId);
   }, [orderId]);
 
-  return <div>Redirecting</div>;
+  return <h1>Redirecting...</h1>;
 }
 
 export default OrderShow;
