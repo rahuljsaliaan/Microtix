@@ -11,6 +11,6 @@ jobs:
       - run: |
           cd payments
           npm install
-          echo API_KEY=${{ secrets.STRIPE_KEY }} >> .env
+          echo STRIPE_KEY=${{ secrets.STRIPE_KEY }} >> .env
           cat .env
           npm run test:ci
