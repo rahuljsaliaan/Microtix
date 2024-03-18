@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import { Order } from '../../models/Order';
 import { OrderStatus } from '@rjmicrotix/common';
 import { Payment } from '../../models/Payment';
+import { stripe } from '../../stripe-config';
 
 jest.mock('../../stripe-config');
 
@@ -20,6 +21,8 @@ it('returns a 404 when purchasing order that does not exist', async () => {
       },
     })
     .expect(404);
+
+  expect(stripe.paymentIntents.cancel).toHaveBeenCalled();
 });
 
 it('returns a 401 when purchasing order that does not belong to the user', async () => {
@@ -48,6 +51,8 @@ it('returns a 401 when purchasing order that does not belong to the user', async
       },
     })
     .expect(401);
+
+  expect(stripe.paymentIntents.cancel).toHaveBeenCalled();
 });
 
 it('returns a 400 when purchasing a cancelled order', async () => {
@@ -78,6 +83,8 @@ it('returns a 400 when purchasing a cancelled order', async () => {
       },
     })
     .expect(400);
+
+  expect(stripe.paymentIntents.cancel).toHaveBeenCalled();
 });
 
 it('returns a 201 with valid inputs', async () => {
