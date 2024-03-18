@@ -9,6 +9,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          cd payments && npm install && npm run test:ci
+          cd payments
+          npm install
           echo API_KEY=${{ secrets.STRIPE_KEY }} >> .env
           cat .env
+          npm run test:ci
