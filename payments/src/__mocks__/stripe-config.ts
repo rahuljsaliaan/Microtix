@@ -47,4 +47,7 @@ export const stripe = {
       return newStripeData;
     },
   },
+  paymentIntents: {
+    cancel: jest.fn(),
+  },
 };
